@@ -46,8 +46,8 @@ Tree::TreeNode* Tree::rightRotate(TreeNode* node){
     node->left = tran; 
     mid->right = node;
 
-    mid->height = max(mid->left->height, mid->right->height) + 1; 
-    node->height = max(node->left->height, node->right->height) + 1; 
+    mid->height = max(getHeight(mid->left), getHeight(mid->right)) + 1; 
+    node->height = max(getHeight(node->left), getHeight(node->right)) + 1; 
 
     return mid;
 }
@@ -76,7 +76,7 @@ Tree::TreeNode* Tree::insert(TreeNode* root, int key) {
         }
             //if violates balance property, perform rotation
         if(abs(getHeight(root->right) - getHeight(root->left)) > 1){
-            rotate(root, getHeight(root->right) - getHeight(root->left), key); 
+            root = rotate(root, getHeight(root->right) - getHeight(root->left), key); 
 //            rotation += 1; 
         }   
         root->height = 1 + max(getHeight(root->right), getHeight(root->left)); //increment height
@@ -88,8 +88,9 @@ Tree::TreeNode* Tree::insert(TreeNode* root, int key) {
 Tree::TreeNode* Tree::rotate(TreeNode* node, int dif, int val){//node here is the 
     bool b = false; 
     //if true, then it is inserted to the right of root
-    if(dif = 2) b = true; //right height - left height; 
-
+    if(dif == 2){
+         b = true; //right height - left height; 
+    }
     if(b == true){
         //>
         if(val < node->right->data){

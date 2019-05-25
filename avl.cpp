@@ -15,13 +15,16 @@ struct range{
     int ub; 
     range(int x, int y): lb(x), ub(y){}
 };
+
 int main(){
     Tree t; 
-    t.root = t.insert(t.root, 3);
-    t.root = t.insert(t.root, 4); 
-    cout << (t.root)->data <<endl; 
+    t.root = t.insert(t.root, 3); 
+    t.root = t.insert(t.root, 4);  
     t.root = t.insert(t.root, 5); 
-    cout << (t.root)->data <<endl;
-    cout << (t.root)->left->data<<endl;   
+    t.insert(t.root, 6);
+    t.insert(t.root, 7);  
+    cout << "root is: " +to_string((t.root)->data) <<endl;
+    cout << "root has height: " + to_string((t.root)->height)<<endl; 
+    cout << "r-sub has height: " + to_string((t.root)->right->height)<<endl;  
     return 0; 
 }
