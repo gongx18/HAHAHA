@@ -22,7 +22,9 @@ int main(){
     t.root = t.insert(t.root, 4);  
     t.root = t.insert(t.root, 5); 
     t.insert(t.root, 6);
-    t.insert(t.root, 7);  
+    t.insert(t.root, 7); 
+    t.insert(t.root, 3); 
+    t.insert(t.root, 3);  
     cout << "root is: " +to_string((t.root)->data) <<endl;
     cout << "root has height: " + to_string((t.root)->height)<<endl; 
     cout << "r-sub has height: " + to_string((t.root)->right->height)<<endl;  

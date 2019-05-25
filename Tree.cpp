@@ -110,3 +110,96 @@ Tree::TreeNode* Tree::rotate(TreeNode* node, int dif, int val){//node here is th
         }
     }
 }
+
+//stores the value of all leaves nodes in this vector
+void findLeaves(TreeNode* root, vector<TreeNode*> v){
+    if(root == NULL) return; 
+    if(root->left == NULL && root->right = NULL){
+        v.push_back(root); 
+    }
+    findLeaves(root->left);
+    findLeaves(root->right); 
+}
+
+//adds on to the vector that is filled with range object for a single leaf node; 
+
+//note that the key here is the data of a single leaf node; 
+Tree::range deleteLeaf(TreeNode* root, int key, TreeNode* parent, string rotType, vector<range> v){
+    if(key < root->data){
+        deleteLeaf(root->left);
+        root->height = max(getHeight(root->left), getHeight(root->right)) + 1; 
+    }
+    else if(key > root->data){
+        deleteLeaf(root->right);
+        root->height = max(getHeight(root->left), getHeight(root->right)) + 1;  
+            
+    }    
+    else{
+        root->height += 1; 
+        return; 
+    }
+    if(abs(getHeight(root->right) - getHeight(root->left)) > 1){
+        if(checkViolation(root) == rotType){
+           v.push_back(range(root->findPre(), root->findSuc())); 
+        }
+    }
+    
+}
+
+//12: rl  
+string checkViolationType(TreeNode* root){ 
+        if(val < node->right->data){
+            return "right-left"; 
+        }else{
+            return "left"; 
+        }
+
+    }else{//inserted to the left of node; 
+        //<
+        if(val < node->left->data){
+            return "left-right";
+        }else{
+            return "right";
+        }
+    }
+}
+
+//return the number that representes 
+int fakeInsert(TreeNode* root, vector<TreeNode*>v){
+    for(i = 0; i < v.size(); i++){
+        range r(root->findPre(), root->findSuc()); 
+        
+    }
+}
+
+
+
+
+
+
+//those findPre and findSuc are special, since they are only finding the predecessor or sucessor of leaf node. 
+int findPre(TreeNode* root, int val, int pre){ 
+    while(root != NULL){
+        if(val > root->data){
+            pre = root->data; 
+            findPre(root->right); 
+        }else{
+            findPre(root->left); 
+        }
+    }
+    return pre; 
+}
+
+int findSuc(TreeNode* root, int val, int suc){
+    while(root != NULL){
+        if(val < root->data){
+            suc = root->data; 
+            findSuc(root->left)
+        }else{
+            findSuc(root->right); 
+        }
+    }
+    return suc; 
+}
+
+
