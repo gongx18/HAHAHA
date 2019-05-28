@@ -62,8 +62,8 @@ int Tree::getHeight(TreeNode* node){
         return node->height; 
 }
 
-Tree::TreeNode* Tree::insert(TreeNode* root, int key, int& visits, int& rotNum) {
-    //normal BST insertion: 
+Tree::TreeNode* Tree::insert(TreeNode* root, int key, int& visits, int& rotNum) { 
+    //BST insertion
     if(root == 0)
         return new TreeNode(key); 
     else{
@@ -77,29 +77,25 @@ Tree::TreeNode* Tree::insert(TreeNode* root, int key, int& visits, int& rotNum) 
         }else{
             root->left = insert(root->left, key, visits, rotNum); 
         }
-            //if violates balance property, perform rotation
+        //perform rotation if unbalanced
         if(abs(getHeight(root->right) - getHeight(root->left)) > 1){
             root = rotate(root, getHeight(root->right) - getHeight(root->left), key); 
             rotNum += 1; 
         }   
-        root->height = 1 + max(getHeight(root->right), getHeight(root->left)); //increment height
+        //re-adjust height
+        root->height = 1 + max(getHeight(root->right), getHeight(root->left)); 
         return root; 
     }
 }
 
 
-Tree::TreeNode* Tree::rotate(TreeNode* node, int dif, int val){//node here is the 
-    bool b = false; 
-    //if true, then it is inserted to the right of root
+Tree::TreeNode* Tree::rotate(TreeNode* node, int dif, int val){
     if(dif == 2){
-         b = true; //right height - left height; 
-    }
-    if(b == true){
-        //>
+        //> : right-left
         if(val < node->right->data){
             node->right = rightRotate(node->right); 
             return leftRotate(node); 
-        }else{
+        }else{//left-left
             return leftRotate(node); 
         }
 
@@ -114,7 +110,7 @@ Tree::TreeNode* Tree::rotate(TreeNode* node, int dif, int val){//node here is th
     }
 }
 
-//stores the value of all leaves nodes in this vector
+//fill v with pointers to leaf nodes
 void Tree::findLeaves(TreeNode* root, vector<TreeNode*>* v){
     if(root == NULL) return; 
     else if(getHeight(root) == 0){
@@ -124,7 +120,7 @@ void Tree::findLeaves(TreeNode* root, vector<TreeNode*>* v){
     findLeaves(root->right, v); 
 }
 
-//note that the key here is the data of a single leaf node; 
+//basically fake insertion
 void Tree::deleteLeaf(TreeNode* root, int key, string rotType, vector<range>* v, bool& b){
     if(key < root->data){
         deleteLeaf(root->left, key, rotType, v, b);
@@ -139,17 +135,17 @@ void Tree::deleteLeaf(TreeNode* root, int key, string rotType, vector<range>* v,
         return; 
     }
     
-    //check whether after the fake insertion the avl property is violated at "root"
+    //check balanced property (backward)
     if(abs(getHeight(root->right) - getHeight(root->left)) > 1 && b == true){ 
         cout <<"violation type is: " +checkViolationType(root, key)<<endl; 
         if(checkViolationType(root, key) == rotType){
             v->push_back(range(findPre(root, key, INT_MIN), findSuc(root, key, INT_MAX))); 
-            b = false;//done after the first unbalance. 
+            b = false;//stop recursing after the first unbalance. 
         }
     }
 }
 
-//return a string that representtype of violation;   
+//return type of violation(string);   
 string Tree::checkViolationType(TreeNode* root, int val){ 
     if(val > root->data){ 
         if(val < root->right->data)
@@ -166,6 +162,7 @@ string Tree::checkViolationType(TreeNode* root, int val){
     }
 }
 
+//reset height after one fake insert
 void Tree::resetH(TreeNode* root, int val){
     cout <<"current node is " + to_string(root->data)<<endl; 
     if(root->data == val){
