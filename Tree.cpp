@@ -118,7 +118,6 @@ Tree::TreeNode* Tree::rotate(TreeNode* node, int dif, int val){//node here is th
 void Tree::findLeaves(TreeNode* root, vector<TreeNode*>* v){
     if(root == NULL) return; 
     else if(getHeight(root) == 0){
-        cout << "root data is "+ to_string(root->data)<<endl; 
         v->push_back(root); 
     }
     findLeaves(root->left, v);
@@ -126,13 +125,13 @@ void Tree::findLeaves(TreeNode* root, vector<TreeNode*>* v){
 }
 
 //note that the key here is the data of a single leaf node; 
-void Tree::deleteLeaf(TreeNode* root, int key, string rotType, vector<range>* v){
+void Tree::deleteLeaf(TreeNode* root, int key, string rotType, vector<range>* v, bool& b){
     if(key < root->data){
-        deleteLeaf(root->left, key, rotType, v);
+        deleteLeaf(root->left, key, rotType, v, b);
         root->height = max(getHeight(root->left), getHeight(root->right)) + 1; 
     }
     else if(key > root->data){
-        deleteLeaf(root->right, key, rotType, v);
+        deleteLeaf(root->right, key, rotType, v, b);
         root->height = max(getHeight(root->left), getHeight(root->right)) + 1;  
     }    
     else{
@@ -141,12 +140,11 @@ void Tree::deleteLeaf(TreeNode* root, int key, string rotType, vector<range>* v)
     }
     
     //check whether after the fake insertion the avl property is violated at "root"
-    if(abs(getHeight(root->right) - getHeight(root->left)) > 1){
-        cout<<"height broken"<<endl; 
+    if(abs(getHeight(root->right) - getHeight(root->left)) > 1 && b == true){ 
         cout <<"violation type is: " +checkViolationType(root, key)<<endl; 
         if(checkViolationType(root, key) == rotType){
-            cout<<"wrong"<<endl;
-            v->push_back(range(findPre(root, key, INT_MIN), findSuc(root, key, INT_MAX))); //????
+            v->push_back(range(findPre(root, key, INT_MIN), findSuc(root, key, INT_MAX))); 
+            b = false;//done after the first unbalance. 
         }
     }
 }
@@ -169,6 +167,7 @@ string Tree::checkViolationType(TreeNode* root, int val){
 }
 
 void Tree::resetH(TreeNode* root, int val){
+    cout <<"current node is " + to_string(root->data)<<endl; 
     if(root->data == val){
         root->height = 0;
         return; 
@@ -177,13 +176,12 @@ void Tree::resetH(TreeNode* root, int val){
     }else{
         resetH(root->left, val);
     }
-    root->height = max(root->left->height, root->right->height) + 1;
+    root->height = max(getHeight(root->left), getHeight(root->right)) + 1;
     return; 
 }
 
 
 int Tree::findPre(TreeNode* root, int val, int pre){
-    cout <<"root data is" + to_string(root->data) + "value is:" + to_string(val) + "pre is: " + to_string(pre) <<endl;  
     if(root->data == val){ 
         return pre; 
     }else if(val > root->data){
@@ -195,7 +193,7 @@ int Tree::findPre(TreeNode* root, int val, int pre){
 } 
 
 
-int Tree::findSuc(TreeNode* root, int val, int suc){
+int Tree::findSuc(TreeNode* root, int val, int suc){  
     if(root->data == val){
         return suc; 
     }else if(val < root->data){

@@ -32,7 +32,7 @@ int getHeight(TreeNode* node);
 TreeNode* insert(TreeNode* root, int key, int& visits, int& rotNum); 
 TreeNode* rotate(TreeNode* node, int dif, int val);
 void findLeaves(TreeNode* root, vector<TreeNode*>* v);
-void deleteLeaf(TreeNode* root, int key, string rotType, vector<range>* v);
+void deleteLeaf(TreeNode* root, int key, string rotType, vector<range>* v, bool& b);
 string checkViolationType(TreeNode* root, int val); 
 int findPre(TreeNode* root, int val, int pre);
 int findSuc(TreeNode* root, int val, int suc);
