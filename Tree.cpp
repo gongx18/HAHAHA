@@ -1,6 +1,9 @@
 #include "Tree.h"
 #include <math.h>
 #include <iostream>
+#include <vector>
+#include <cstdint>
+#include <climits>
 using namespace std; 
 struct TreeNode{
     int data;
@@ -59,25 +62,25 @@ int Tree::getHeight(TreeNode* node){
         return node->height; 
 }
 
-Tree::TreeNode* Tree::insert(TreeNode* root, int key) {
+Tree::TreeNode* Tree::insert(TreeNode* root, int key, int& visits, int& rotNum) {
     //normal BST insertion: 
     if(root == 0)
         return new TreeNode(key); 
     else{
-//        visits += 1;  
+        visits += 1;  
         if(root->data == key){
-//            visits -= 1; 
+            visits -= 1; 
             return root; 
         }
         if(root->data < key){
-            root->right = insert(root->right, key); 
+            root->right = insert(root->right, key, visits, rotNum); 
         }else{
-            root->left = insert(root->left, key); 
+            root->left = insert(root->left, key, visits, rotNum); 
         }
             //if violates balance property, perform rotation
         if(abs(getHeight(root->right) - getHeight(root->left)) > 1){
             root = rotate(root, getHeight(root->right) - getHeight(root->left), key); 
-//            rotation += 1; 
+            rotNum += 1; 
         }   
         root->height = 1 + max(getHeight(root->right), getHeight(root->left)); //increment height
         return root; 
@@ -112,94 +115,95 @@ Tree::TreeNode* Tree::rotate(TreeNode* node, int dif, int val){//node here is th
 }
 
 //stores the value of all leaves nodes in this vector
-void findLeaves(TreeNode* root, vector<TreeNode*> v){
+void Tree::findLeaves(TreeNode* root, vector<TreeNode*>* v){
     if(root == NULL) return; 
-    if(root->left == NULL && root->right = NULL){
-        v.push_back(root); 
+    else if(getHeight(root) == 0){
+        cout << "root data is "+ to_string(root->data)<<endl; 
+        v->push_back(root); 
     }
-    findLeaves(root->left);
-    findLeaves(root->right); 
+    findLeaves(root->left, v);
+    findLeaves(root->right, v); 
 }
 
-//adds on to the vector that is filled with range object for a single leaf node; 
-
 //note that the key here is the data of a single leaf node; 
-Tree::range deleteLeaf(TreeNode* root, int key, TreeNode* parent, string rotType, vector<range> v){
+void Tree::deleteLeaf(TreeNode* root, int key, string rotType, vector<range>* v){
     if(key < root->data){
-        deleteLeaf(root->left);
+        deleteLeaf(root->left, key, rotType, v);
         root->height = max(getHeight(root->left), getHeight(root->right)) + 1; 
     }
     else if(key > root->data){
-        deleteLeaf(root->right);
+        deleteLeaf(root->right, key, rotType, v);
         root->height = max(getHeight(root->left), getHeight(root->right)) + 1;  
-            
     }    
     else{
         root->height += 1; 
         return; 
     }
+    
+    //check whether after the fake insertion the avl property is violated at "root"
     if(abs(getHeight(root->right) - getHeight(root->left)) > 1){
-        if(checkViolation(root) == rotType){
-           v.push_back(range(root->findPre(), root->findSuc())); 
+        cout<<"height broken"<<endl; 
+        cout <<"violation type is: " +checkViolationType(root, key)<<endl; 
+        if(checkViolationType(root, key) == rotType){
+            cout<<"wrong"<<endl;
+            v->push_back(range(findPre(root, key, INT_MIN), findSuc(root, key, INT_MAX))); //????
         }
     }
-    
 }
 
-//12: rl  
-string checkViolationType(TreeNode* root){ 
-        if(val < node->right->data){
+//return a string that representtype of violation;   
+string Tree::checkViolationType(TreeNode* root, int val){ 
+    if(val > root->data){ 
+        if(val < root->right->data)
             return "right-left"; 
-        }else{
-            return "left"; 
-        }
-
+        else
+            return "left-left"; 
+        
     }else{//inserted to the left of node; 
         //<
-        if(val < node->left->data){
+        if(val < root->left->data)
             return "left-right";
-        }else{
-            return "right";
-        }
+        else
+            return "right-right";
     }
 }
 
-//return the number that representes 
-int fakeInsert(TreeNode* root, vector<TreeNode*>v){
-    for(i = 0; i < v.size(); i++){
-        range r(root->findPre(), root->findSuc()); 
-        
+void Tree::resetH(TreeNode* root, int val){
+    if(root->data == val){
+        root->height = 0;
+        return; 
+    }else if(val > root->data){
+        resetH(root->right, val); 
+    }else{
+        resetH(root->left, val);
     }
+    root->height = max(root->left->height, root->right->height) + 1;
+    return; 
 }
 
 
-
-
-
-
-//those findPre and findSuc are special, since they are only finding the predecessor or sucessor of leaf node. 
-int findPre(TreeNode* root, int val, int pre){ 
-    while(root != NULL){
-        if(val > root->data){
-            pre = root->data; 
-            findPre(root->right); 
-        }else{
-            findPre(root->left); 
-        }
+int Tree::findPre(TreeNode* root, int val, int pre){
+    cout <<"root data is" + to_string(root->data) + "value is:" + to_string(val) + "pre is: " + to_string(pre) <<endl;  
+    if(root->data == val){ 
+        return pre; 
+    }else if(val > root->data){
+        pre = root->data; 
+        findPre(root->right, val, pre); 
+    }else{
+        findPre(root->left, val, pre); 
     }
-    return pre; 
-}
+} 
 
-int findSuc(TreeNode* root, int val, int suc){
-    while(root != NULL){
-        if(val < root->data){
-            suc = root->data; 
-            findSuc(root->left)
-        }else{
-            findSuc(root->right); 
-        }
+
+int Tree::findSuc(TreeNode* root, int val, int suc){
+    if(root->data == val){
+        return suc; 
+    }else if(val < root->data){
+        suc = root->data; 
+        findSuc(root->left, val, suc);
+    }else{
+        findSuc(root->right, val, suc); 
     }
-    return suc; 
 }
 
 
