@@ -1,0 +1,19 @@
+# Ignore this line and the next one.
+
+# After this, your tree should contain {7, 12, 42, 108}
+insert 3 1 4 0
+
+# Look these up in the tree constructed above:
+# lookup 7 14 -82 12 7
+
+# print tree
+print tree
+
+# print rot
+print right-left
+
+print left-right
+
+print right-right
+
+print left-left

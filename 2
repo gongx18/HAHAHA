@@ -22,25 +22,18 @@ void f1(string violationType, vector<Tree::TreeNode*> &v, vector<Tree::range> &a
 //        cout <<"root has height:" + to_string(t.root->height)<<endl; 
     }
 
-        int j = 0;
-        if(ans.size() ==  0){
-            cout << "No inserts would cause a " + violationType + " rotation:" <<endl; 
-        }else if(ans[j].ub - ans[j].lb < 0){
+
+        if(ans.size() == 0){
             cout << "No inserts would cause a " + violationType + " rotation:" <<endl; 
         }else{
-            cout<<"The following inserts would cause a " + violationType + " rotation:"<<endl;  
+            cout<<"The following inserts would cause a " + violationType + " rotation:"<<endl; 
+            int j; 
             for(j = 0; j < ans.size() - 1; j++){
-                if(ans[j].ub - ans[j].lb > 0){
-                    cout<< to_string(ans[j].lb)+ " to " + to_string(ans[j].ub) + ", "; 
-                }else if(ans[j].ub - ans[j].lb == 0){
-                    cout<< to_string(ans[j].lb) + ","; 
-                }
+                cout<< to_string(ans[j].lb)+ " to " + to_string(ans[j].ub) + ", "; 
             }
-            if(ans[j].ub - ans[j].lb > 0){
-                cout<< to_string(ans[j].lb)+ " to " + to_string(ans[j].ub) <<endl; ; 
-            }else if(ans[j].ub - ans[j].lb == 0){
-                cout<< to_string(ans[j].lb) << endl; 
-            } 
+            j += 1; 
+            cout << to_string(ans[j].lb)+ " to " + to_string(ans[j].ub) <<endl;
+            cout <<"waht the fucik: " + to_string(ans[j].lb) << endl;  
         }
 }
 
@@ -95,6 +88,7 @@ int main(){
                     f1("right-left", v, ans, t); 
                 }else if(word == "right-right"){
                     f1("right-right", v, ans, t); 
+                    cout <<"findPre 42 is" + t.findPre(t.root, 42,  -2147483648) << endl; 
                 }
             }
         }

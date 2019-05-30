@@ -9,7 +9,7 @@ using namespace std;
 class Tree{
 public: 
 Tree(); 
-~Tree(); 
+//~Tree(); 
 
 struct TreeNode{
     int data;
@@ -32,7 +32,8 @@ int getHeight(TreeNode* node);
 TreeNode* insert(TreeNode* root, int key, int& visits, int& rotNum); 
 TreeNode* rotate(TreeNode* node, int dif, int val);
 void findLeaves(TreeNode* root, vector<TreeNode*>* v);
-void deleteLeaf(TreeNode* root, int key, string rotType, vector<range>* v, bool& b);
+void deleteLeaf(TreeNode* root, TreeNode* trueRoot, int key, string rotType, vector<range>& v, bool& b);
+void print(TreeNode* root, int count, TreeNode* parent); 
 string checkViolationType(TreeNode* root, int val); 
 int findPre(TreeNode* root, int val, int pre);
 int findSuc(TreeNode* root, int val, int suc);
