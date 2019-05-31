@@ -63,12 +63,10 @@ int Tree::getHeight(TreeNode* node){
 Tree::TreeNode* Tree::insert(TreeNode* root, int key, int& visits, int& rotNum) { 
     //BST insertion
     if(root == 0){
-        visits += 1;
         return new TreeNode(key); 
     }else{
         visits += 1; 
         if(root->data == key){
-            visits -= 1; 
             return root; 
         }
         if(root->data < key){
@@ -79,7 +77,7 @@ Tree::TreeNode* Tree::insert(TreeNode* root, int key, int& visits, int& rotNum) 
         //perform rotation if unbalanced
         if(abs(getHeight(root->right) - getHeight(root->left)) > 1){
 //            cout<< "root that is violated is " + to_string(root->data) + "root->right is :" + to_string(getHeight(root->right)) + "root->left is: " + to_string(getHeight(root->left)) <<endl; 
-            root = rotate(root, getHeight(root->right) - getHeight(root->left), key); 
+            root = rotate(root, getHeight(root->right) - getHeight(root->left), key, rotNum); 
             rotNum += 1; 
         }   
         //re-adjust height
@@ -88,23 +86,42 @@ Tree::TreeNode* Tree::insert(TreeNode* root, int key, int& visits, int& rotNum) 
     }
 }
 
+int Tree::lookup(TreeNode* root, int& key, int& visits){
+    if(root == NULL)
+        return -99815;
+    else if(root->data == key){
+        return key; 
+    }else if(root->data > key){
+        visits ++;
+        lookup(root->left, key, visits); 
+    }else{
+        visits ++; 
+        lookup(root->right, key, visits); 
+    }
+}
 
-Tree::TreeNode* Tree::rotate(TreeNode* node, int dif, int val){
+
+
+Tree::TreeNode* Tree::rotate(TreeNode* node, int dif, int val, int& rotNum){
     if(dif >=  2){
         //> : right-left
         if(val < node->right->data){ 
+            rotNum += 2; 
             node->right = rightRotate(node->right); 
             return leftRotate(node); 
         }else{//left-left
+            rotNum += 1;
             return leftRotate(node); 
         }
 
     }else{//inserted to the left of node; 
         //<
         if(val > node->left->data){
+            rotNum += 2;
             node->left = leftRotate(node->left); 
             return rightRotate(node); 
         }else{
+            rotNum += 1;
             return rightRotate(node); 
         }
     }
@@ -149,9 +166,7 @@ void Tree::deleteLeaf(TreeNode* root, TreeNode* trueRoot, int key, string rotTyp
             v.push_back(range(lb, ub));  
         }
         b = false;//stop recursing after the first unbalance. 
-    }else if(abs(getHeight(root->right) - getHeight(root->left)) > 1 && checkViolationType(root, key) == "edge"){ //no need to check whether b is true; 
-        //note that this has a very special property: i
-//        cout <<"  Edge violation node:" + to_string(root->data) <<endl; 
+    }else if(abs(getHeight(root->right) - getHeight(root->left)) > 1 && checkViolationType(root, key) == "edge"){ //no need to check whether b is true;  
         int lb = findPre(trueRoot, key, INT_MIN);
         int ub = findSuc(trueRoot, key, INT_MAX); 
         if(lb != INT_MIN)
@@ -162,8 +177,7 @@ void Tree::deleteLeaf(TreeNode* root, TreeNode* trueRoot, int key, string rotTyp
             if(rotType == "left-right"){
                 v.push_back(range(root->left->data + 1, ub));
             }else if(rotType == "right-right"){
-                v.push_back(range(lb, root->left->data - 1));
-                cout << "target is: " + to_string(root->data) <<endl; 
+                v.push_back(range(lb, root->left->data - 1)); 
             } 
         }else{//root->right != NULL
             if(rotType == "right-left")
@@ -234,7 +248,7 @@ void Tree::resetH(TreeNode* root, int val){
 }
 
 int Tree::findPre(TreeNode* root,int val, int pre){
-    cout <<"pre is:" + to_string(root->data) + "value is" + to_string(val)<<endl; 
+//    cout <<"pre is:" + to_string(root->data) + "value is" + to_string(val)<<endl; 
     if(root->data == val){
         return pre; 
     }else if(val > root->data){

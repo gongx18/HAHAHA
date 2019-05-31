@@ -30,10 +30,12 @@ TreeNode* leftRotate(TreeNode* node);
 TreeNode* rightRotate(TreeNode* node); 
 int getHeight(TreeNode* node);
 TreeNode* insert(TreeNode* root, int key, int& visits, int& rotNum); 
-TreeNode* rotate(TreeNode* node, int dif, int val);
+TreeNode* rotate(TreeNode* node, int dif, int val, int& rotNum);
 void findLeaves(TreeNode* root, vector<TreeNode*>* v);
 void deleteLeaf(TreeNode* root, TreeNode* trueRoot, int key, string rotType, vector<range>& v, bool& b);
 void print(TreeNode* root, int count, TreeNode* parent); 
+//int lookup(TreeNode* root, int key, int& visits, int& rotNum){
+int lookup(TreeNode* root, int& key,int& visits); 
 string checkViolationType(TreeNode* root, int val); 
 int findPre(TreeNode* root, int val, int pre);
 int findSuc(TreeNode* root, int val, int suc);
