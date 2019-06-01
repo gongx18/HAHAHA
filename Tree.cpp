@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <climits>
 using namespace std; 
+
 struct TreeNode{
     int data;
     int height; 
@@ -12,6 +13,7 @@ struct TreeNode{
     struct TreeNode* right; 
     TreeNode(int x): data(x), left(0), right(0), height(0){}
 };
+
 struct range{
     int lb; 
     int ub; 
@@ -29,7 +31,6 @@ int Tree::max(int a, int b)
 } 
 
 Tree::TreeNode* Tree::leftRotate(TreeNode* node){
-//    cout <<"node is " + to_string(node->data) + "height " + to_string(node->height) <<endl; 
     TreeNode* mid = node->right; 
     TreeNode* tran = mid->left;
     node->right = tran; 
@@ -76,7 +77,6 @@ Tree::TreeNode* Tree::insert(TreeNode* root, int key, int& visits, int& rotNum) 
         }
         //perform rotation if unbalanced
         if(abs(getHeight(root->right) - getHeight(root->left)) > 1){
-//            cout<< "root that is violated is " + to_string(root->data) + "root->right is :" + to_string(getHeight(root->right)) + "root->left is: " + to_string(getHeight(root->left)) <<endl; 
             root = rotate(root, getHeight(root->right) - getHeight(root->left), key, rotNum); 
             rotNum += 1; 
         }   
@@ -90,6 +90,7 @@ int Tree::lookup(TreeNode* root, int& key, int& visits){
     if(root == NULL)
         return -99815;
     else if(root->data == key){
+        visits ++; 
         return key; 
     }else if(root->data > key){
         visits ++;
@@ -99,8 +100,6 @@ int Tree::lookup(TreeNode* root, int& key, int& visits){
         lookup(root->right, key, visits); 
     }
 }
-
-
 
 Tree::TreeNode* Tree::rotate(TreeNode* node, int dif, int val, int& rotNum){
     if(dif >=  2){
@@ -154,14 +153,12 @@ void Tree::deleteLeaf(TreeNode* root, TreeNode* trueRoot, int key, string rotTyp
     
     //check balanced property (backward)
     if(abs(getHeight(root->right) - getHeight(root->left)) > 1 && b == true && getHeight(root) != 2){ 
-//        cout <<"violation type is: " +checkViolationType(root, key)<<endl;
         int lb = findPre(trueRoot, key, INT_MIN);
         int ub = findSuc(trueRoot, key, INT_MAX);
         if(lb != INT_MIN)
             lb += 1;
         if(ub != INT_MAX)
             ub -= 1;    
-//        cout <<"root of violation is:" + to_string(root->data) <<endl; 
         if(checkViolationType(root, key) == rotType){ 
             v.push_back(range(lb, ub));  
         }
@@ -176,16 +173,17 @@ void Tree::deleteLeaf(TreeNode* root, TreeNode* trueRoot, int key, string rotTyp
         if(root ->left != NULL){
             if(rotType == "left-right"){
                 v.push_back(range(root->left->data + 1, ub));
-            }else if(rotType == "right-right"){
+            }else if(rotType == "left-left"){
                 v.push_back(range(lb, root->left->data - 1)); 
             } 
         }else{//root->right != NULL
             if(rotType == "right-left")
                 v.push_back(range(lb, root->right->data - 1)); 
-            else if(rotType == "left-left"){ 
+            else if(rotType == "right-right"){ 
                 v.push_back(range(root->right->data + 1, ub)); 
             }
         }
+        b = false; 
     }
 }
 
@@ -197,7 +195,7 @@ string Tree::checkViolationType(TreeNode* root, int val){
         else if(val < root->right->data)
             return "right-left"; 
         else
-            return "left-left"; 
+            return "right-right"; 
         
     }else{//inserted to the left of node; 
         //<
@@ -206,20 +204,18 @@ string Tree::checkViolationType(TreeNode* root, int val){
         else if(val < root->left->data)
             return "left-right";
         else
-            return "right-right";
+            return "left-left";
     }
 }
 
 //inorder print: 
 void Tree::print(TreeNode* root, int count, TreeNode* parent){
     string s;
-//    cout << "count is" + to_string(count) <<endl;  
     for(int i = 0; i < count; i++){ 
         s += "  "; 
     }
     if(root != 0){
         count += 1;
-//        print(root->left, count, root); 
         if(root->height > 0)
             cout <<s+ "Node(" + to_string(root->data) + ", h=" + to_string(root->height) +"):" <<endl; 
         else
@@ -233,8 +229,7 @@ void Tree::print(TreeNode* root, int count, TreeNode* parent){
 }
 
 //reset height after one fake insert
-void Tree::resetH(TreeNode* root, int val){
-//    cout <<"current node is " + to_string(root->data)<<endl; 
+void Tree::resetH(TreeNode* root, int val){ 
     if(root->data == val){
         root->height = 0;
         return; 
@@ -248,7 +243,6 @@ void Tree::resetH(TreeNode* root, int val){
 }
 
 int Tree::findPre(TreeNode* root,int val, int pre){
-//    cout <<"pre is:" + to_string(root->data) + "value is" + to_string(val)<<endl; 
     if(root->data == val){
         return pre; 
     }else if(val > root->data){
@@ -258,7 +252,6 @@ int Tree::findPre(TreeNode* root,int val, int pre){
         findPre(root->left, val, pre); 
     }
 } 
-
 
 int Tree::findSuc(TreeNode* root,  int val, int suc){  
     if(root->data == val){
