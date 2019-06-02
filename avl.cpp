@@ -80,8 +80,8 @@ int main(int args, char* argv[]){
                 count ++; 
             }
             cout <<"Added " + to_string(add) + " of " + to_string(count) + " nodes." <<endl; 
-            cout << "Visited " + to_string(visits) + "("+ to_string(visits/count) + ") nodes and performed " + 
-            to_string(rotNum) + "(" + to_string(rotNum/count)+") rotations."<<endl<<endl;
+            cout << "Visited " + to_string(visits) + "("+ to_string(visits*1.0/count) + ") nodes and performed " + 
+            to_string(rotNum) + "(" + to_string(rotNum* 1.0/count)+") rotations."<<endl<<endl;
                     
         }else if(word == "lookup"){
             int visits = 0;
@@ -103,7 +103,7 @@ int main(int args, char* argv[]){
                     s+= ",";
             }
             cout << s+"]" <<endl; 
-            cout << "Visited " + to_string(visits) + "("+ to_string(visits/count) + ") nodes and performed 0(0) rotations."<<endl<<endl;   
+            cout << "Visited " + to_string(visits) + "("+ to_string(visits*1.0/count) + ") nodes and performed 0(0) rotations."<<endl<<endl;   
         }else if(word == "print"){
             iss >> word; 
             if(word == "tree"){
