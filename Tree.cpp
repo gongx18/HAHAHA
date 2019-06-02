@@ -150,7 +150,7 @@ void Tree::deleteLeaf(TreeNode* root, TreeNode* trueRoot, int key, string rotTyp
         root->height += 1; 
         return; 
     }
-    
+//    cout << "node is :" + to_string(root->data) + ", right height is :" + to_string(getHeight(root->right)) + " left height is : " + to_string(getHeight(root->left)) << endl; 
     //check balanced property (backward)
     if(abs(getHeight(root->right) - getHeight(root->left)) > 1 && b == true && getHeight(root) != 2){ 
         int lb = findPre(trueRoot, key, INT_MIN);
@@ -177,9 +177,9 @@ void Tree::deleteLeaf(TreeNode* root, TreeNode* trueRoot, int key, string rotTyp
                 v.push_back(range(lb, root->left->data - 1)); 
             } 
         }else{//root->right != NULL
-            if(rotType == "right-left")
+            if(rotType == "right-left"){
                 v.push_back(range(lb, root->right->data - 1)); 
-            else if(rotType == "right-right"){ 
+            }else if(rotType == "right-right"){
                 v.push_back(range(root->right->data + 1, ub)); 
             }
         }

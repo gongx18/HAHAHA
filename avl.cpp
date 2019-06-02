@@ -20,11 +20,19 @@ void f1(string violationType, vector<Tree::TreeNode*> &v, vector<Tree::range> &a
     }
 
         int j = 0;
+        int b = true; 
         if(ans.size() ==  0){
             cout << "No inserts would cause a " + violationType + " rotation." <<endl<<endl; 
-        }else if(ans[j].ub - ans[j].lb < 0){
-            cout << "No inserts would cause a " + violationType + " rotation." <<endl<<endl; 
-        }else{
+        }else if(b){
+            while(j < ans.size()){
+                if(ans[j].ub - ans[j].lb >= 0)
+                    b = false;
+                j++; 
+            }
+            if(b)
+                cout << "No inserts would cause a " + violationType + " rotation." <<endl<<endl; 
+        }
+        if(!b){
             cout<<"The following inserts would cause a " + violationType + " rotation:"<<endl;  
             for(j = 0; j < ans.size() - 1; j++){
                 if(ans[j].ub - ans[j].lb > 0){
