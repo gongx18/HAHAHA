@@ -12,14 +12,14 @@
 using namespace std;
 
 void f1(string violationType, vector<Tree::TreeNode*> &v, vector<Tree::range> &ans, Tree t){
-    for(int i = 0; i < v.size(); i++){
+    for(size_t i = 0; i < v.size(); i++){
         int val = v[i]->data;
         bool b = true; 
         t.deleteLeaf(t.root, t.root, val, violationType, ans, b);
         t.resetH(t.root, v[i]->data);  
     }
 
-        int j = 0;
+        size_t j = 0;
         int b = true; 
         if(ans.size() ==  0){
             cout << "No inserts would cause a " + violationType + " rotation." <<endl<<endl; 
@@ -97,7 +97,7 @@ int main(int args, char* argv[]){
                 }
             }
             string s = "Found " + to_string(v.size()) + " of " + to_string(count)+ " nodes: ["; 
-            for(int i = 0; i < v.size(); i++){
+            for(size_t i = 0; i < v.size(); i++){
                 s+= to_string(v[i]);
                 if(i != v.size() - 1)
                     s+= ",";
