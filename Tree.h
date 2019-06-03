@@ -3,13 +3,14 @@
 #include <string>
 #include <vector>
 #include <string>
+#include <iostream>
 
 using namespace std; 
 
 class Tree{
 public: 
 Tree(); 
-//~Tree(); 
+~Tree(); 
 
 struct TreeNode{
     int data; 
@@ -17,8 +18,11 @@ struct TreeNode{
     struct TreeNode* right; 
     int height; 
     TreeNode(int x): data(x), left(0), right(0), height(0){}
-//    ~TreeNode(){
-//    }
+    ~TreeNode(){
+//        cout <<"Node destructor called" <<endl; 
+        delete left;
+        delete right; 
+    }
 };
 
 struct range{

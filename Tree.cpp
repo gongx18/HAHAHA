@@ -24,6 +24,9 @@ Tree::Tree(){
     root = 0; 
 }
 
+Tree::~Tree(){
+    delete root; 
+}
 
 int Tree::max(int a, int b)  
 {  
@@ -228,7 +231,7 @@ void Tree::print(TreeNode* root, int count, TreeNode* parent){
         print(root->right, count, root); 
     }else{
         if(getHeight(parent) != 0)
-            cout << s + "NULL" << endl; 
+            cout << s + "Null" << endl; 
     }
 }
 

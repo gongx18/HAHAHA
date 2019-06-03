@@ -10,7 +10,7 @@
 #include <limits.h>
 using namespace std;
 
-void f1(string violationType, vector<Tree::TreeNode*> &v, vector<Tree::range> &ans, Tree t){
+void f1(string violationType, vector<Tree::TreeNode*> &v, vector<Tree::range> &ans, Tree &t){
     for(size_t i = 0; i < v.size(); i++){
         int val = v[i]->data;
         bool b = true; 
@@ -78,9 +78,7 @@ int main(int args, char* argv[]){
                 int value = stoi(word); 
                 if(t.lookup(t.root, value, temp) == -99815) //temp is just some random value you pass in for the sake of passing in; 
                     add ++; 
-                t.root = t.insert(t.root, value, visits, rotNum); 
-//                if(t.getHeight(t.root) != height)
-//                    add++; 
+                t.root = t.insert(t.root, value, visits, rotNum);  
                 count ++; 
             }
             cout <<"Added " << add << " of " << count << " nodes." <<endl; 
