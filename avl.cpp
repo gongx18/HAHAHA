@@ -76,7 +76,7 @@ int main(int args, char* argv[]){
             int temp = 0;
             while(iss >> word){  
                 int value = stoi(word); 
-                if(t.lookup(t.root, value, temp) != 99815) //temp is just some random value you pass in for the sake of passing in; 
+                if(t.lookup(t.root, value, temp) == 99815) //temp is just some random value you pass in for the sake of passing in; 
                     add ++; 
                 t.root = t.insert(t.root, value, visits, rotNum); 
 //                if(t.getHeight(t.root) != height)
@@ -102,7 +102,7 @@ int main(int args, char* argv[]){
             for(size_t i = 0; i < v.size(); i++){
                 s+= to_string(v[i]);
                 if(i != v.size() - 1)
-                    s+= " ,";
+                    s+= ", ";
             }
             cout << s+"]" <<endl; 
             cout << "Visited "  << visits <<" (" << visits*1.0/count <<  ") nodes and performed 0 (0) rotations."<<endl<<endl;   
