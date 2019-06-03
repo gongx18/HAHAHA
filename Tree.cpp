@@ -7,10 +7,10 @@
 using namespace std; 
 
 struct TreeNode{
-    int data;
-    int height; 
+    int data; 
     struct TreeNode* left;
-    struct TreeNode* right; 
+    struct TreeNode* right;
+    int height;  
     TreeNode(int x): data(x), left(0), right(0), height(0){}
 };
 
