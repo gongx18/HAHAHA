@@ -168,7 +168,8 @@ void Tree::deleteLeaf(TreeNode* root, TreeNode* trueRoot, int key, string rotTyp
         b = false;//stop recursing after the first unbalance. 
     }else if(abs(getHeight(root->right) - getHeight(root->left)) > 1 && checkViolationType(root, key) == "edge"){ //no need to check whether b is true;  
         int lb = findPre(trueRoot, key, INT_MIN);
-        int ub = findSuc(trueRoot, key, INT_MAX); 
+        int ub = findSuc(trueRoot, key, INT_MAX);
+//        cout << "upper bound is " << ub <<endl;  
         if(lb != INT_MIN)
             lb += 1;
         if(ub != INT_MAX)
@@ -250,12 +251,12 @@ int Tree::findPre(TreeNode* root,int val, int pre){
         return pre; 
     }else if(val > root->data){
         pre = root->data;
-        findPre(root->right, val, pre); 
+        return findPre(root->right, val, pre); 
     }else{
-        findPre(root->left, val, pre); 
+        return findPre(root->left, val, pre); 
     }
 //    throw "no return type Exception";
-    return -2147483647;
+//    return -2147483647;
 } 
 
 int Tree::findSuc(TreeNode* root,  int val, int suc){  
@@ -263,12 +264,12 @@ int Tree::findSuc(TreeNode* root,  int val, int suc){
         return suc; 
     }else if(val < root->data){
         suc = root->data; 
-        findSuc(root->left, val, suc);
+        return findSuc(root->left, val, suc);
     }else{
-        findSuc(root->right, val, suc); 
+        return findSuc(root->right, val, suc); 
     }
 //    throw "no return type Exception"; 
-    return 2147483647;
+//    return 2147483647;
 }
 
 
