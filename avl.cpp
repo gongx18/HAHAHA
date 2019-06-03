@@ -21,7 +21,7 @@ void f1(string violationType, vector<Tree::TreeNode*> &v, vector<Tree::range> &a
         size_t j = 0;
         int b = true; 
         if(ans.size() ==  0){
-            cout << "No inserts would cause a " + violationType + " rotation." <<endl<<endl; 
+            cout << "No inserts would cause a " + violationType + " rotation." <<endl; //
         }else if(b){
             while(j < ans.size()){
                 if(ans[j].ub - ans[j].lb >= 0)
@@ -29,7 +29,7 @@ void f1(string violationType, vector<Tree::TreeNode*> &v, vector<Tree::range> &a
                 j++; 
             }
             if(b)
-                cout << "No inserts would cause a " + violationType + " rotation." <<endl<<endl; 
+                cout << "No inserts would cause a " + violationType + " rotation." <<endl;// 
         }
         if(!b){
             cout<<"The following inserts would cause a " + violationType + " rotation:"<<endl;  
@@ -41,9 +41,9 @@ void f1(string violationType, vector<Tree::TreeNode*> &v, vector<Tree::range> &a
                 }
             }
             if(ans[j].ub - ans[j].lb > 0){
-                cout<< to_string(ans[j].lb)+ " to " + to_string(ans[j].ub) <<endl<<endl; ; 
+                cout<< to_string(ans[j].lb)+ " to " + to_string(ans[j].ub) <<endl; //
             }else if(ans[j].ub - ans[j].lb == 0){
-                cout<< to_string(ans[j].lb) << endl<<endl; 
+                cout<< to_string(ans[j].lb) << endl;// 
             } 
         }
 }
