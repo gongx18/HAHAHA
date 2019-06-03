@@ -44,8 +44,8 @@ void f1(string violationType, vector<Tree::TreeNode*> &v, vector<Tree::range> &a
                     cout<< to_string(ans[j].lb) + ","; 
                 }
             }
-            if(ans[j].ub - ans[j].lb > 0){
-                cout<< to_string(ans[j].lb)+ " to " + to_string(ans[j].ub) <<endl; //
+            if(ans[j].ub - ans[j].lb > 0 || ans[j].ub - ans[j].lb == -2147483648 + ans[j].ub){
+                cout << to_string(ans[j].lb)+ " to " + to_string(ans[j].ub) <<endl; //
             }else if(ans[j].ub - ans[j].lb == 0){
                 cout<< to_string(ans[j].lb) << endl;// 
             } 

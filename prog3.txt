@@ -1,0 +1,5 @@
+insert 20 15 22 17 21 24 26 
+print left-left
+print right-right
+print left-right
+print right-left
