@@ -52,6 +52,10 @@ void f1(string violationType, vector<Tree::TreeNode*> &v, vector<Tree::range> &a
 int main(int args, char* argv[]){
     Tree t; 
     ifstream inFile;
+    if(args != 2){
+        cerr <<"wrong input format"<<endl; 
+        exit(1); 
+    }
     inFile.open(argv[1]); //how to upload file??????
     if(inFile.fail( )){
         cerr <<"unable to open file";
