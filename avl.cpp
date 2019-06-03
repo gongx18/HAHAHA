@@ -76,7 +76,6 @@ int main(int args, char* argv[]){
             int temp = 0;
             while(iss >> word){  
                 int value = stoi(word); 
-                int height = t.getHeight(t.root);
                 if(t.lookup(t.root, value, temp) != 99815) //temp is just some random value you pass in for the sake of passing in; 
                     add ++; 
                 t.root = t.insert(t.root, value, visits, rotNum); 
