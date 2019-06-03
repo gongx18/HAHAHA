@@ -1,0 +1,6 @@
+insert 15 10 20 -5 19
+print tree
+print left-left
+print right-right
+print left-right
+print right-left

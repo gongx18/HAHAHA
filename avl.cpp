@@ -23,9 +23,13 @@ void f1(string violationType, vector<Tree::TreeNode*> &v, vector<Tree::range> &a
         if(ans.size() ==  0){
             cout << "No inserts would cause a " + violationType + " rotation." <<endl; //
         }else if(b){
-            while(j < ans.size()){
-                if(ans[j].ub - ans[j].lb >= 0)
+            while(j != ans.size()){
+                if(ans[j].ub - ans[j].lb >= 0 || ans[j].ub - ans[j].lb == -2147483648 + ans[j].ub){
                     b = false;
+                }else{  //erase element from ans if it is not a valid pair
+                    ans.erase(ans.begin() + j, ans.begin() + j + 1);
+                    j--; 
+                }
                 j++; 
             }
             if(b)
@@ -34,8 +38,8 @@ void f1(string violationType, vector<Tree::TreeNode*> &v, vector<Tree::range> &a
         if(!b){
             cout<<"The following inserts would cause a " + violationType + " rotation:"<<endl;  
             for(j = 0; j < ans.size() - 1; j++){
-                if(ans[j].ub - ans[j].lb > 0){
-                    cout<< to_string(ans[j].lb)+ " to " + to_string(ans[j].ub) + ", "; 
+                if(ans[j].ub - ans[j].lb > 0 || ans[j].ub - ans[j].lb == -2147483648 + ans[j].ub){ //can prove that ub must be positive
+                    cout<< ans[j].lb << " to " << ans[j].ub << ", "; 
                 }else if(ans[j].ub - ans[j].lb == 0){
                     cout<< to_string(ans[j].lb) + ","; 
                 }
@@ -114,7 +118,7 @@ int main(int args, char* argv[]){
                 t.findLeaves(t.root, &v); 
                 iss >> word; 
                 if(word == "left-left"){
-                    f1("left-left", v, ans, t); 
+                    f1("left-left", v, ans, t);
                 }else if(word == "left-right"){
                     f1("left-right", v, ans, t); 
                 }else if(word == "right-left"){
