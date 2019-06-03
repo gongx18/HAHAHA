@@ -99,7 +99,9 @@ int Tree::lookup(TreeNode* root, int& key, int& visits){
         visits ++; 
         lookup(root->right, key, visits); 
     }
-    throw "no return value Exception"; 
+    //dangerous use:
+    return 9999999; 
+     
 }
 
 Tree::TreeNode* Tree::rotate(TreeNode* node, int dif, int val, int& rotNum){
@@ -252,7 +254,8 @@ int Tree::findPre(TreeNode* root,int val, int pre){
     }else{
         findPre(root->left, val, pre); 
     }
-    throw "no return type Exception";
+//    throw "no return type Exception";
+    return -2147483647;
 } 
 
 int Tree::findSuc(TreeNode* root,  int val, int suc){  
@@ -264,7 +267,8 @@ int Tree::findSuc(TreeNode* root,  int val, int suc){
     }else{
         findSuc(root->right, val, suc); 
     }
-    throw "no return type Exception"; 
+//    throw "no return type Exception"; 
+    return 2147483647;
 }
 
 
