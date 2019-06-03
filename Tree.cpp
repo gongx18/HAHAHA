@@ -78,7 +78,7 @@ Tree::TreeNode* Tree::insert(TreeNode* root, int key, int& visits, int& rotNum) 
         //perform rotation if unbalanced
         if(abs(getHeight(root->right) - getHeight(root->left)) > 1){
             root = rotate(root, getHeight(root->right) - getHeight(root->left), key, rotNum); 
-            rotNum += 1; 
+//            rotNum += 1; 
         }   
         //re-adjust height
         root->height = 1 + max(getHeight(root->right), getHeight(root->left)); 
@@ -92,16 +92,16 @@ int Tree::lookup(TreeNode* root, int& key, int& visits){
     else if(root->data == key){
         visits ++; 
         return key; 
-    }else if(root->data > key){
+    }
+    //not null, not equal, continue search
+    if(root->data > key){
         visits ++;
-        lookup(root->left, key, visits); 
+        return lookup(root->left, key, visits); 
     }else{
         visits ++; 
-        lookup(root->right, key, visits); 
+        return lookup(root->right, key, visits); 
     }
-    //dangerous use:
-    return 9999999; 
-     
+//    throw "no return type exception"; 
 }
 
 Tree::TreeNode* Tree::rotate(TreeNode* node, int dif, int val, int& rotNum){

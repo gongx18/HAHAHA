@@ -3,7 +3,6 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
-//#include <boost/lexical_cast.hpp>
 #include <fstream>
 #include <cstdint>
 #include <climits>
@@ -74,8 +73,7 @@ int main(int args, char* argv[]){
             int rotNum = 0; 
             int count = 0;
             int add = 0;  
-            while(iss >> word){ 
-//                int value = boost::lexical_cast<int>(word); 
+            while(iss >> word){  
                 int value = stoi(word); 
                 int height = t.getHeight(t.root);
                 t.root = t.insert(t.root, value, visits, rotNum); 
@@ -83,17 +81,15 @@ int main(int args, char* argv[]){
                     add++;  
                 count ++; 
             }
-            cout <<"Added " + to_string(add) + " of " + to_string(count) + " nodes." <<endl; 
-            cout << "Visited " + to_string(visits) + "("+ to_string(visits*1.0/count) + ") nodes and performed " + 
-            to_string(rotNum) + "(" + to_string(rotNum* 1.0/count)+") rotations."<<endl<<endl;
+            cout <<"Added " << add << " of " << count << " nodes." <<endl; 
+            cout << "Visited " << visits << " (" << visits*1.0/count << ") nodes and performed " << rotNum << " (" << rotNum* 1.0/count << ") rotations."<<endl<<endl;
                     
         }else if(word == "lookup"){
             int visits = 0;
             int count = 0;   
             vector<int> v; 
             while(iss >> word){
-                count += 1;
-//                int value = boost::lexical_cast<int>(word); 
+                count += 1; 
                 int value = stoi(word);  
                 int temp =  t.lookup(t.root, value, visits);
                 if(temp  != -99815){
@@ -107,7 +103,7 @@ int main(int args, char* argv[]){
                     s+= ",";
             }
             cout << s+"]" <<endl; 
-            cout << "Visited " + to_string(visits) + "("+ to_string(visits*1.0/count) + ") nodes and performed 0(0) rotations."<<endl<<endl;   
+            cout << "Visited "  << visits <<" (" << visits*1.0/count <<  ") nodes and performed 0 (0) rotations."<<endl<<endl;   
         }else if(word == "print"){
             iss >> word; 
             if(word == "tree"){

@@ -17,6 +17,8 @@ struct TreeNode{
     struct TreeNode* right; 
     int height; 
     TreeNode(int x): data(x), left(0), right(0), height(0){}
+//    ~TreeNode(){
+//    }
 };
 
 struct range{
