@@ -41,7 +41,7 @@ void f1(string violationType, vector<Tree::TreeNode*> &v, vector<Tree::range> &a
                 if(ans[j].ub - ans[j].lb > 0 || ans[j].ub - ans[j].lb == -2147483648 + ans[j].ub){ //can prove that ub must be positive
                     cout<< ans[j].lb << " to " << ans[j].ub << ", "; 
                 }else if(ans[j].ub - ans[j].lb == 0){
-                    cout<< to_string(ans[j].lb) + ","; 
+                    cout<< to_string(ans[j].lb) + ", "; 
                 }
             }
             if(ans[j].ub - ans[j].lb > 0 || ans[j].ub - ans[j].lb == -2147483648 + ans[j].ub){
