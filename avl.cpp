@@ -19,16 +19,16 @@ void f1(string violationType, vector<Tree::TreeNode*> &v, vector<Tree::range> &a
     }
 
         size_t j = 0;
-        int b = true; 
+        int b = true;
         if(ans.size() ==  0){
             cout << "No inserts would cause a " + violationType + " rotation." <<endl; //
         }else if(b){
             while(j != ans.size()){
                 if(ans[j].ub - ans[j].lb >= 0 || ans[j].ub - ans[j].lb == -2147483648 + ans[j].ub){
                     b = false;
-                }else{  //erase element from ans if it is not a valid pair
+                                    }else{  //erase element from ans if it is not a valid pair
                     ans.erase(ans.begin() + j, ans.begin() + j + 1);
-                    j--; 
+                    j--;
                 }
                 j++; 
             }
@@ -36,7 +36,7 @@ void f1(string violationType, vector<Tree::TreeNode*> &v, vector<Tree::range> &a
                 cout << "No inserts would cause a " + violationType + " rotation." <<endl;// 
         }
         if(!b){
-            cout<<"The following inserts would cause a " + violationType + " rotation:"<<endl;  
+            cout<<"The following inserts would cause a " + violationType + " rotation:"<<endl; 
             for(j = 0; j < ans.size() - 1; j++){
                 if(ans[j].ub - ans[j].lb > 0 || ans[j].ub - ans[j].lb == -2147483648 + ans[j].ub){ //can prove that ub must be positive
                     cout<< ans[j].lb << " to " << ans[j].ub << ", "; 

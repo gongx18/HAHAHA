@@ -160,19 +160,20 @@ void Tree::deleteLeaf(TreeNode* root, TreeNode* trueRoot, int key, string rotTyp
     //check balanced property (backward)
     if(abs(getHeight(root->right) - getHeight(root->left)) > 1 && b == true && getHeight(root) != 2){ 
         int lb = findPre(trueRoot, key, INT_MIN);
-        int ub = findSuc(trueRoot, key, INT_MAX);
+        int ub = findSuc(trueRoot, key, INT_MAX); 
         if(lb != INT_MIN)
             lb += 1;
         if(ub != INT_MAX)
-            ub -= 1;    
-        if(checkViolationType(root, key) == rotType){ 
-            v.push_back(range(lb, ub));  
+            ub -= 1;  
+        if(checkViolationType(root, key) == rotType){  
+            v.push_back(range(lb, key - 1)); 
+            v.push_back(range(key + 1, ub));  
         }
         b = false;//stop recursing after the first unbalance. 
     }else if(abs(getHeight(root->right) - getHeight(root->left)) > 1 && checkViolationType(root, key) == "edge"){ //no need to check whether b is true;  
         int lb = findPre(trueRoot, key, INT_MIN);
         int ub = findSuc(trueRoot, key, INT_MAX);
-//        cout << "upper bound is " << ub <<endl;  
+        cout << "node is : " << root->data << "edge" <<endl; 
         if(lb != INT_MIN)
             lb += 1;
         if(ub != INT_MAX)
@@ -186,7 +187,7 @@ void Tree::deleteLeaf(TreeNode* root, TreeNode* trueRoot, int key, string rotTyp
         }else{//root->right != NULL
             if(rotType == "right-left"){
                 v.push_back(range(lb, root->right->data - 1)); 
-            }else if(rotType == "right-right"){
+            }else if(rotType == "right-right"){ 
                 v.push_back(range(root->right->data + 1, ub)); 
             }
         }
@@ -203,6 +204,7 @@ string Tree::checkViolationType(TreeNode* root, int val){
             return "right-left"; 
         else
             return "right-right"; 
+            //return "right-right"; 
         
     }else{//inserted to the left of node; 
         //<

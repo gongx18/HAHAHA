@@ -1,0 +1,6 @@
+insert 20 10 40 30 50 
+
+print left-left
+print right-right
+print left-right
+print right-left
