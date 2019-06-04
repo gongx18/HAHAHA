@@ -172,8 +172,7 @@ void Tree::deleteLeaf(TreeNode* root, TreeNode* trueRoot, int key, string rotTyp
         b = false;//stop recursing after the first unbalance. 
     }else if(abs(getHeight(root->right) - getHeight(root->left)) > 1 && checkViolationType(root, key) == "edge"){ //no need to check whether b is true;  
         int lb = findPre(trueRoot, key, INT_MIN);
-        int ub = findSuc(trueRoot, key, INT_MAX);
-        cout << "node is : " << root->data << "edge" <<endl; 
+        int ub = findSuc(trueRoot, key, INT_MAX); 
         if(lb != INT_MIN)
             lb += 1;
         if(ub != INT_MAX)
