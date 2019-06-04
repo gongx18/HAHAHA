@@ -209,7 +209,7 @@ string Tree::checkViolationType(TreeNode* root, int val){
         //<
         if(val == root->left->data)
             return "edge"; 
-        else if(val < root->left->data)
+        else if(val > root->left->data)
             return "left-right";
         else
             return "left-left";

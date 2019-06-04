@@ -1,4 +1,4 @@
-insert 20 10 40 30 50 
+insert 20 10  
 
 print left-left
 print right-right
