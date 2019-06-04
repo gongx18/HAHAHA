@@ -1,7 +1,7 @@
 # Ignore this line and the next one.
 
 # After this, your tree should contain {7, 12, 42, 108}
-insert 50 45 55 40 47 53 60 35 43
+insert 50 45 55 40 47 53 60 35 43 49
 # insert 6 8 10 
 
 # Look these up in the tree constructed above:
